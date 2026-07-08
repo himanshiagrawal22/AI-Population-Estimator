@@ -1,0 +1,10 @@
+{
+    "Algorithm": "Random Forest Regression",
+    "Training Cities": 356,
+    "Training Samples": 284,
+    "Testing Samples": 72,
+    "Features": 7,
+    "MAE": 1540914.45,
+    "RMSE": 3834055.11,
+    "R2": -0.2269
+}
