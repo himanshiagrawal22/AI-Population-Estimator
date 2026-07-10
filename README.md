@@ -147,26 +147,25 @@ The Streamlit dashboard allows users to:
 
 > *(Add dashboard screenshot here)*
 ## 📸 Screenshots
-
 ## 📸 Dashboard
 
-<img src="images/Dashboard.png" width="100%">
+![Dashboard](./images/Dashboard.png)
 
 ## 🚀 Prediction
 
-<img src="images/Dashboard1.png" width="100%">
+![Prediction](./images/Dashboard2.png)
 
 ## 📊 Dataset Preview
 
-<img src="images/Dashboard3.png" width="100%">
+![Dataset](./images/Dashboard3.png)
 
 ## 📈 Feature Importance
 
-<img src="images/feature_importance.png" width="100%">
+![Feature Importance](./images/feature_importance.png)
 
 ## 📉 Prediction Plot
 
-<img src="images/prediction_plot.png" width="100%">
+![Prediction Plot](./images/prediction_plot.png)
 
 ## ▶️ Installation
 
