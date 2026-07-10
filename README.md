@@ -145,7 +145,6 @@ The Streamlit dashboard allows users to:
 
 ---
 
-
 > *(Add dashboard screenshot here)*
 ## 📸 Screenshots
 
@@ -155,7 +154,7 @@ The Streamlit dashboard allows users to:
 
 ## 🚀 Prediction
 
-<img src="images/Dashboard2.png" width="100%">
+<img src="images/Dashboard1.png" width="100%">
 
 ## 📊 Dataset Preview
 
