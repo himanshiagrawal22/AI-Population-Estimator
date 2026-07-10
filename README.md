@@ -4,6 +4,12 @@ An AI-powered application that estimates the population of Indian cities using *
 
 ---
 
+## 🚀 Live Demo
+
+👉 https://ai-population-estimator.streamlit.app/
+
+---
+
 ## 🚀 Project Overview
 
 Traditional population surveys and censuses are expensive, time-consuming, and conducted only once every few years. This project explores an alternative approach by using satellite-derived night-light intensity to estimate city populations through Machine Learning.
