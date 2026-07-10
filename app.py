@@ -37,9 +37,17 @@ def load_dataset():
     dataset = pd.merge(
         features,
         population,
-        left_on="city",
-        right_on="City"
+        on="City",
+        how="left",
+        suffixes=("_old", "")
     )
+
+    # Remove old population column if present
+    if "Population_old" in dataset.columns:
+        dataset.drop(columns=["Population_old"], inplace=True)
+
+    # Rename City -> city
+    dataset["city"] = dataset["City"]
 
     # -------------------------
     # Feature Engineering
@@ -91,9 +99,6 @@ st.sidebar.metric("Training Cities", len(dataset))
 st.sidebar.metric("Features Used", "7")
 st.sidebar.metric("Satellite Source", "NASA VIIRS")
 
-# Update after retraining
-st.sidebar.metric("R² Score", "0.34")
-
 # ==========================================================
 # TITLE
 # ==========================================================
@@ -129,8 +134,7 @@ st.subheader("🛰 Satellite Features")
 
 feature_df = pd.DataFrame({
 
-    "Feature": [
-
+    "Feature":[
         "Average Brightness",
         "Maximum Brightness",
         "Minimum Brightness",
@@ -138,11 +142,9 @@ feature_df = pd.DataFrame({
         "Brightness Range",
         "Brightness Ratio",
         "Brightness Product"
-
     ],
 
-    "Value": [
-
+    "Value":[
         round(selected["average_masked_mean"],2),
         round(selected["average_masked_max"],2),
         round(selected["average_masked_min"],2),
@@ -150,15 +152,11 @@ feature_df = pd.DataFrame({
         round(selected["Brightness_Range"],2),
         round(selected["Brightness_Ratio"],2),
         round(selected["Brightness_Product"],2)
-
     ]
 
 })
 
-st.dataframe(
-    feature_df,
-    use_container_width=True
-)
+st.dataframe(feature_df,use_container_width=True)
 
 # ==========================================================
 # PREDICTION
@@ -166,12 +164,10 @@ st.dataframe(
 
 st.divider()
 
-if st.button(
-    "🚀 Predict Population",
-    use_container_width=True
-):
+if st.button("🚀 Predict Population",use_container_width=True):
 
-    X = np.array([[
+    X=np.array([[
+
         selected["average_masked_mean"],
         selected["average_masked_max"],
         selected["average_masked_min"],
@@ -179,37 +175,35 @@ if st.button(
         selected["Brightness_Range"],
         selected["Brightness_Ratio"],
         selected["Brightness_Product"]
+
     ]])
 
-    prediction = model.predict(X)[0]
+    prediction=model.predict(X)[0]
 
-    actual = selected["Population"]
+    actual=selected["Population"]
 
-    error = abs(actual - prediction)
+    error=abs(actual-prediction)
 
-    percentage = (error / actual) * 100
+    percentage=(error/actual)*100
 
     st.success("Prediction Completed Successfully!")
 
-    col1, col2, col3 = st.columns(3)
+    c1,c2,c3=st.columns(3)
 
-    with col1:
-        st.metric(
-            "Actual Population",
-            f"{actual:,}"
-        )
+    c1.metric(
+        "Actual Population",
+        f"{int(actual):,}"
+    )
 
-    with col2:
-        st.metric(
-            "Predicted Population",
-            f"{int(prediction):,}"
-        )
+    c2.metric(
+        "Predicted Population",
+        f"{int(prediction):,}"
+    )
 
-    with col3:
-        st.metric(
-            "Prediction Error",
-            f"{percentage:.2f}%"
-        )
+    c3.metric(
+        "Prediction Error",
+        f"{percentage:.2f}%"
+    )
 
 # ==========================================================
 # MODEL INSIGHTS
@@ -219,44 +213,30 @@ st.divider()
 
 st.header("📊 Model Insights")
 
-col1, col2 = st.columns(2)
+col1,col2=st.columns(2)
 
 with col1:
 
     st.subheader("Feature Importance")
 
-    if os.path.exists(
-        "images/feature_importance.png"
-    ):
-
+    if os.path.exists("images/feature_importance.png"):
         st.image(
             "images/feature_importance.png",
             use_container_width=True
         )
 
-    else:
-
-        st.info("Feature Importance graph not found.")
-
 with col2:
 
     st.subheader("Predicted vs Actual")
 
-    if os.path.exists(
-        "images/prediction_plot.png"
-    ):
-
+    if os.path.exists("images/prediction_plot.png"):
         st.image(
             "images/prediction_plot.png",
             use_container_width=True
         )
 
-    else:
-
-        st.info("Prediction Plot not found.")
-
 # ==========================================================
-# DATASET PREVIEW
+# DATASET
 # ==========================================================
 
 st.divider()
@@ -264,6 +244,7 @@ st.divider()
 st.header("📋 Dataset Preview")
 
 st.dataframe(
+
     dataset[
         [
             "city",
@@ -272,8 +253,10 @@ st.dataframe(
             "Population"
         ]
     ],
+
     use_container_width=True,
     height=350
+
 )
 
 # ==========================================================
@@ -286,23 +269,20 @@ st.header("ℹ️ About")
 
 st.markdown("""
 
-This project estimates the population of Indian cities
-using **NASA VIIRS Night-Light satellite imagery**
-and **Random Forest Machine Learning**.
+This project estimates the population of Indian cities using
+NASA VIIRS Night-Light satellite imagery and Random Forest Regression.
 
 ### Workflow
 
-1. Collect VIIRS imagery using Google Earth Engine
-2. Extract Night-Light Features
-3. Perform Feature Engineering
-4. Train Random Forest Regression Model
-5. Predict Population
-6. Visualize Results using Streamlit
+1. Google Earth Engine
+2. VIIRS Night Light Extraction
+3. Feature Engineering
+4. Random Forest Training
+5. Population Prediction
+6. Streamlit Dashboard
 
 """)
 
-st.divider()
-
 st.caption(
-    "Developed by Himanshi Agrawal | AI Population Estimator"
+    "Developed by Himanshi Agrawal"
 )
