@@ -259,30 +259,6 @@ st.dataframe(
 
 )
 
-# ==========================================================
-# ABOUT
-# ==========================================================
-
-st.divider()
-
-st.header("ℹ️ About")
-
-st.markdown("""
-
-This project estimates the population of Indian cities using
-NASA VIIRS Night-Light satellite imagery and Random Forest Regression.
-
-### Workflow
-
-1. Google Earth Engine
-2. VIIRS Night Light Extraction
-3. Feature Engineering
-4. Random Forest Training
-5. Population Prediction
-6. Streamlit Dashboard
-
-""")
-
 st.caption(
     "Developed by Himanshi Agrawal"
 )
